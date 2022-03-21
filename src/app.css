@@ -1,0 +1,12 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+	@apply text-lg font-semibold;
+}
+
+body {
+	@apply p-2;
+}

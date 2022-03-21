@@ -1,0 +1,11 @@
+# Button component
+
+Here is an example:
+
+```svelte preview
+<script>
+    import Button from '$lib/Button.svelte'
+</script>
+
+<Button>Hello World!!!!</Button>
+```
