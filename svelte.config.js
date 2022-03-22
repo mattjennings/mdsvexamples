@@ -2,8 +2,7 @@ import { mdsvex } from 'mdsvex';
 import mdsvexConfig from './mdsvex.config.js';
 import preprocess from 'svelte-preprocess';
 import adapter from '@sveltejs/adapter-auto';
-import { mdsvexPreviewVite } from './src/lib/mdsvex-code-preview.js'
-
+import codePreview from './src/lib/vite.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,10 +10,11 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
+		package: {
+			files: (file) => file !== 'Button.svelte'
+		},
 		vite: {
-			plugins: [
-				mdsvexPreviewVite()
-			]
+			plugins: [codePreview]
 		}
 	},
 

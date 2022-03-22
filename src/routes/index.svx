@@ -5,7 +5,9 @@ Here is an example:
 ```svelte preview
 <script>
     import Button from '$lib/Button.svelte'
+    let label = 'hello'
+    label = `${label} world`
 </script>
 
-<Button>Hello World!!!!</Button>
+<Button>{label}</Button>
 ```
