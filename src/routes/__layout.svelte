@@ -1,6 +1,6 @@
 <script>
 	import '../app.css';
-	import '../prism.css';
+	import '$lib/themes/light.css';
 </script>
 
 <slot />

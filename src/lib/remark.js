@@ -1,45 +1,38 @@
-import { visit } from 'unist-util-visit';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import Prism from 'prismjs';
-import 'prism-svelte';
-import { stringifySrc } from './util.js';
+import { visit } from 'unist-util-visit'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import Prism from 'prismjs'
+import 'prism-svelte'
+import { escape } from './util.js'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // regex to find <script> block in svelte
 const RE_SCRIPT_START =
-	/<script(?:\s+?[a-zA-z]+(=(?:["']){0,1}[a-zA-Z0-9]+(?:["']){0,1}){0,1})*\s*?>/;
+	/<script(?:\s+?[a-zA-z]+(=(?:["']){0,1}[a-zA-Z0-9]+(?:["']){0,1}){0,1})*\s*?>/
 
-export const EXAMPLE_MODULE_PREFIX = '___mdsvex_example___';
-export const EXAMPLE_COMPONENT_PREFIX = 'MdsvexExample___';
+export const EXAMPLE_MODULE_PREFIX = '___mdsvex_example___'
+export const EXAMPLE_COMPONENT_PREFIX = 'MdsvexExample___'
 
 export default function (options = {}) {
-	const { ExampleComponent = path.resolve(__dirname, 'Example.svelte') } = options;
+	const { ExampleComponent = path.resolve(__dirname, 'Example.svelte') } = options
 
 	return function transformer(tree) {
-		let examples = 0;
-
-		String.raw`
-			\`\${}\`
-		`;
+		let examples = 0
 
 		visit(tree, 'code', (node) => {
 			// find svelte code blocks with meta to trigger preview
 			if (node.lang === 'svelte' && node.meta && node.meta.includes('preview')) {
 				// add a comment so we can mark where the src is for each example
 				// this is then searched for in plugin.js to create virtual files using this as the file content
-				const src = stringifySrc(
-					`<!-- ${EXAMPLE_COMPONENT_PREFIX}${examples} -->\n` +
-						node.value +
-						`\n<!-- ${EXAMPLE_COMPONENT_PREFIX}${examples} -->`
-				);
+				const src =
+					`/* ${EXAMPLE_COMPONENT_PREFIX}${examples} */` + `String.raw\`${escape(node.value)}\``
 
 				// generate the highlighted code
-				const highlighted = Prism.highlight(node.value, Prism.languages.svelte, 'svelte');
+				const highlighted = Prism.highlight(node.value, Prism.languages.svelte, 'svelte')
 
 				// convert markdown type to svelte syntax, where mdsvex will parse
-				node.type = 'paragaph';
+				node.type = 'paragaph'
 				node.children = [
 					{
 						type: 'text',
@@ -48,38 +41,38 @@ export default function (options = {}) {
 	<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
 </Example>`
 					}
-				];
-				delete node.lang;
-				delete node.meta;
-				delete node.value;
-				examples += 1;
+				]
+				delete node.lang
+				delete node.meta
+				delete node.value
+				examples += 1
 			}
-		});
+		})
 
 		// add imports for each generated example
-		let scripts = `import Example from "${ExampleComponent}";\n`;
+		let scripts = `import Example from "${ExampleComponent}";\n`
 		for (let i = 0; i < examples; i++) {
-			scripts += `import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${EXAMPLE_MODULE_PREFIX}${i}.svelte";\n`;
+			scripts += `import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${EXAMPLE_MODULE_PREFIX}${i}.svelte";\n`
 		}
 
-		let is_script = false;
+		let is_script = false
 
 		// add scripts to script block
 		visit(tree, 'html', (node) => {
 			if (RE_SCRIPT_START.test(node.value)) {
-				is_script = true;
+				is_script = true
 				node.value = node.value.replace(RE_SCRIPT_START, (script) => {
-					return `${script}\n${scripts}`;
-				});
+					return `${script}\n${scripts}`
+				})
 			}
-		});
+		})
 
 		// create script block if needed
 		if (!is_script) {
 			tree.children.push({
 				type: 'html',
 				value: `<script>\n${scripts}</script>`
-			});
+			})
 		}
-	};
+	}
 }

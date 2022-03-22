@@ -1,3 +1,10 @@
+<script>
+	export let src = undefined;
+
+	// just to suppress vite-plugin-svelte warning about src being unused
+	$: src;
+</script>
+
 <div class="root" data-example>
 	<div class="container" data-example-container>
 		<div class="preview-wrapper" data-example-preview-wrapper>

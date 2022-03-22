@@ -5,9 +5,10 @@ Here is an example:
 ```svelte preview
 <script>
     import Button from '$lib/Button.svelte'
-    let label = 'hello'
+    let label = "hello"
     label = `${label} world`
 </script>
 
-<Button>{label}</Button>
+<Button text={`Loading... ${label}`}>{label}</Button>
+
 ```
