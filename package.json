@@ -1,6 +1,6 @@
 {
-	"name": "mdsvex-code-example",
-	"version": "0.0.1",
+	"name": "mdsvexample",
+	"version": "0.0.3",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
@@ -10,6 +10,13 @@
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
 	},
+	"dependencies": {
+		"unplugin": "^0.5.2",
+		"magic-string": "^0.26.1",
+		"prism-svelte": "^0.5.0",
+		"prismjs": "^1.27.0",
+		"unist-util-visit": "^4.1.0"
+	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
@@ -17,7 +24,6 @@
 		"eslint": "^7.32.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^3.2.1",
-		"magic-string": "^0.26.1",
 		"mdsvex": "^0.10.5",
 		"postcss": "^8.4.5",
 		"postcss-load-config": "^3.1.1",
@@ -28,11 +34,7 @@
 		"svelte2tsx": "^0.5.6",
 		"tailwindcss": "^3.0.12",
 		"typescript": "^4.6.2",
-		"unplugin": "^0.5.2",
-		"vite": "^2.8.6",
-		"prism-svelte": "^0.5.0",
-		"prismjs": "^1.27.0",
-		"unist-util-visit": "^4.1.0"
+		"vite": "^2.8.6"
 	},
 	"type": "module"
 }

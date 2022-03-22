@@ -1,18 +1,18 @@
 <script>
-	export let src = undefined;
+	export let src = undefined
 
 	// just to suppress vite-plugin-svelte warning about src being unused
-	$: src;
+	$: src
 </script>
 
-<div class="root" data-example>
-	<div class="container" data-example-container>
-		<div class="preview-wrapper" data-example-preview-wrapper>
-			<div class="preview" data-example-preview>
-				<slot name="preview" />
+<div class="root">
+	<div class="container">
+		<div class="example-wrapper">
+			<div class="example">
+				<slot name="example" />
 			</div>
 		</div>
-		<pre data-example-code class="language-svelte"><slot name="code" /></pre>
+		<pre class="language-svelte"><slot name="code" /></pre>
 	</div>
 </div>
 
@@ -26,22 +26,22 @@
 		flex-direction: column;
 		width: 100%;
 		overflow: hidden;
-		border-bottom-left-radius: var(--preview-border-radius, 0.25rem);
-		border-bottom-right-radius: var(--preview-border-radius, 0.25rem);
+		border-bottom-left-radius: var(--example-border-radius, 0.25rem);
+		border-bottom-right-radius: var(--example-border-radius, 0.25rem);
 	}
 
-	.preview-wrapper {
+	.example-wrapper {
 		display: flex;
 		justify-content: center;
-		background: var(--preview-background, #fafafa);
-		border: var(--preview-border, 1px solid #ddd);
+		background: var(--example-background, #fafafa);
+		border: var(--example-border, 1px solid #ddd);
 		overflow: hidden;
 		border-bottom: none;
-		border-top-left-radius: var(--preview-border-radius, 0.25rem);
-		border-top-right-radius: var(--preview-border-radius, 0.25rem);
+		border-top-left-radius: var(--example-border-radius, 0.25rem);
+		border-top-right-radius: var(--example-border-radius, 0.25rem);
 	}
 
-	.preview {
+	.example {
 		display: flex;
 		justify-content: center;
 		align-items: center;

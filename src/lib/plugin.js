@@ -23,7 +23,7 @@ export default createUnplugin(
 		let viteServer
 
 		return {
-			name: 'mdsvex-code-preview-plugin',
+			name: 'mdsvexample-plugin',
 			transformInclude(id) {
 				return extensions.some((ext) => id.endsWith(ext))
 			},

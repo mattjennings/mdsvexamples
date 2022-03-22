@@ -1,5 +1,5 @@
-import { defineMDSveXConfig as defineConfig } from 'mdsvex';
-import codePreview from './src/lib/remark.js';
+import { defineMDSveXConfig as defineConfig } from 'mdsvex'
+import examples from './src/lib/remark.js'
 
 const config = defineConfig({
 	extensions: ['.svelte.md', '.md', '.svx'],
@@ -8,8 +8,8 @@ const config = defineConfig({
 		dashes: 'oldschool'
 	},
 
-	remarkPlugins: [codePreview],
+	remarkPlugins: [examples],
 	rehypePlugins: []
-});
+})
 
-export default config;
+export default config

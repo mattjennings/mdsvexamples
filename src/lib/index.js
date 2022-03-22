@@ -1,3 +1,2 @@
-import codePreviewRemark from './remark';
-export * from './plugin';
-export { codePreviewRemark };
+import remark from './remark.js'
+export default remark

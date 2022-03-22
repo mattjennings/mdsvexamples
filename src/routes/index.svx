@@ -2,13 +2,13 @@
 
 Here is an example:
 
-```svelte preview
+```svelte example
 <script>
     import Button from '$lib/Button.svelte'
     let label = "hello"
     label = `${label} world`
 </script>
 
-<Button text={`Loading... ${label}`}>{label}</Button>
+<Button>{label}</Button>
 
 ```

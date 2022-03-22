@@ -21,8 +21,8 @@ export default function (options = {}) {
 		let examples = 0
 
 		visit(tree, 'code', (node) => {
-			// find svelte code blocks with meta to trigger preview
-			if (node.lang === 'svelte' && node.meta && node.meta.includes('preview')) {
+			// find svelte code blocks with meta to trigger example
+			if (node.lang === 'svelte' && node.meta && node.meta.includes('example')) {
 				// add a comment so we can mark where the src is for each example
 				// this is then searched for in plugin.js to create virtual files using this as the file content
 				const src =
@@ -37,7 +37,7 @@ export default function (options = {}) {
 					{
 						type: 'text',
 						value: `<Example src={${src}}>
-	<slot slot="preview"><${EXAMPLE_COMPONENT_PREFIX}${examples} /></slot>
+	<slot slot="example"><${EXAMPLE_COMPONENT_PREFIX}${examples} /></slot>
 	<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
 </Example>`
 					}
