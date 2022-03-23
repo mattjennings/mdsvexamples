@@ -21,8 +21,9 @@ export default function (options = {}) {
 		let examples = 0
 
 		visit(tree, 'code', (node) => {
+			const languages = ['svelte', 'html']
 			// find svelte code blocks with meta to trigger example
-			if (node.lang === 'svelte' && node.meta && node.meta.includes('example')) {
+			if (languages.includes(node.lang) && node.meta && node.meta.includes('example')) {
 				// add a comment so we can mark where the src is for each example
 				// this is then searched for in plugin.js to create virtual files using this as the file content
 				const src =
