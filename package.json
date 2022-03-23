@@ -1,6 +1,6 @@
 {
-	"name": "mdsvexample",
-	"version": "0.0.3",
+	"name": "mdsvexamples",
+	"version": "0.0.1",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
