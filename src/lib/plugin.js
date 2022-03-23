@@ -1,6 +1,6 @@
 import { createUnplugin } from 'unplugin'
 import { EXAMPLE_COMPONENT_PREFIX, EXAMPLE_MODULE_PREFIX } from './remark.js'
-import path from 'path'
+import path from 'upath'
 import MagicString from 'magic-string'
 import { unescape } from './util.js'
 
@@ -51,7 +51,7 @@ export default createUnplugin(
 					for (const [, comment, i, src] of matches) {
 						// change path of module so that it's sibling to the mdsvex file
 						const base = path.relative(process.cwd(), id)
-						const importPath = `${base}/${EXAMPLE_MODULE_PREFIX}${i}.svelte`
+						const importPath = path.join(base, `${EXAMPLE_MODULE_PREFIX}${i}.svelte`)
 
 						// store example code
 						examples[importPath] = unescape(src)

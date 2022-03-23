@@ -1,5 +1,5 @@
 import { visit } from 'unist-util-visit'
-import path from 'path'
+import path from 'upath'
 import { fileURLToPath } from 'url'
 import Prism from 'prismjs'
 import 'prism-svelte'
