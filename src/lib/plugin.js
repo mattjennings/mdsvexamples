@@ -25,7 +25,7 @@ export default createUnplugin(
 		return {
 			name: 'mdsvexample-plugin',
 			transformInclude(id) {
-				return extensions.some((ext) => id.endsWith(ext))
+				return extensions.some((ext) => id.endsWith(ext)) || id.includes(EXAMPLE_MODULE_PREFIX)
 			},
 			resolveId(id) {
 				if (id.includes(EXAMPLE_MODULE_PREFIX)) {
@@ -43,36 +43,47 @@ export default createUnplugin(
 				}
 			},
 			transform(code, id) {
-				const matches = code.matchAll(RE_SRC)
+				if (extensions.some((ext) => id.endsWith(ext))) {
+					const matches = code.matchAll(RE_SRC)
 
-				const s = new MagicString(code)
+					const s = new MagicString(code)
 
-				for (const [, comment, i, src] of matches) {
-					// change path of module so that it's sibling to the mdsvex file
-					const base = path.relative(process.cwd(), id)
-					const importPath = `${base}/${EXAMPLE_MODULE_PREFIX}${i}.svelte`
+					for (const [, comment, i, src] of matches) {
+						// change path of module so that it's sibling to the mdsvex file
+						const base = path.relative(process.cwd(), id)
+						const importPath = `${base}/${EXAMPLE_MODULE_PREFIX}${i}.svelte`
 
-					// store example code
-					examples[importPath] = unescape(src)
+						// store example code
+						examples[importPath] = unescape(src)
 
-					// update mdsvex component
-					s
-						// update import path
-						.replace(
-							new RegExp(
-								`import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${EXAMPLE_MODULE_PREFIX}${i}.svelte"`,
-								'g'
-							),
-							`import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${importPath}"`
-						)
-						// remove comment used to mark where code is
-						.replace(comment, '')
+						// update mdsvex component
+						s
+							// update import path
+							.replace(
+								new RegExp(
+									`import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${EXAMPLE_MODULE_PREFIX}${i}.svelte"`,
+									'g'
+								),
+								`import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${importPath}"`
+							)
+							// remove comment used to mark where code is
+							.replace(comment, '')
+					}
+
+					return {
+						code: s.toString(),
+						/** @type {any} */
+						map: s.generateMap()
+					}
 				}
 
-				return {
-					code: s.toString(),
-					/** @type {any} */
-					map: s.generateMap()
+				if (id.includes(EXAMPLE_MODULE_PREFIX)) {
+					return {
+						code,
+						map: {
+							mappings: null
+						}
+					}
 				}
 			},
 
