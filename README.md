@@ -1,40 +1,140 @@
-# create-svelte
+# mdsvexamples
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Render your Svelte code blocks in MDSveX
 
-## Creating a project
+````
+# Button
 
-If you're seeing this, you've probably already done this step. Congrats!
+An example of how to use our Button component
+
+```svelte example
+<script>
+    import Button from '$lib/Button.svelte'
+</script>
+
+<Button>Button</Button>
+```
+````
+
+![preview](https://i.imgur.com/i1O2uot.png)
+
+## Getting Started
 
 ```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
+npm install mdsvexamples
 ```
 
-> Note: the `@next` is temporary
+## Setup
 
-## Developing
+There are two plugins that you need to add: a remark plugin and a vite plugin.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+There are plugins provided for esbuild and rollup as well, as it uses [unplugin](https://github.com/unjs/unplugin), but I have not tested these so YMMV
 
-```bash
-npm run dev
+### MDSveX
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+Add the remark plugin to your MDSveX config
+
+```js
+// mdsvex.config.js
+import { defineMDSveXConfig as defineConfig } from 'mdsvex'
+import examples from 'mdsvexamples'
+
+const config = defineConfig({
+	extensions: ['.svelte.md', '.md', '.svx'],
+
+	smartypants: {
+		dashes: 'oldschool'
+	},
+
+	remarkPlugins: [examples],
+	rehypePlugins: []
+})
+
+export default config
 ```
 
-## Building
+### Vite
 
-To create a production version of your app:
+Add the vite plugin to your vite config
 
-```bash
-npm run build
+```js
+// vite.config.js
+import { defineConfig } from 'vite'
+import examples from 'mdsvexamples/vite'
+
+export default defineConfig({
+	plugins: [examples]
+})
+
+// or svelte.config.js if you're using SvelteKit
+import examples from 'mdsvexamples/vite'
+
+const config = {
+	kit: {
+		/* ... */
+
+		vite: {
+			plugins: [examples]
+		}
+	},
+}
+
+export default config
+
 ```
 
-You can preview the production build with `npm run preview`.
+## Usage
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Add `example` to your Svelte code block and it will be rendered
+
+````
+```svelte example
+<button>Button</button>
+```
+````
+
+Imports also work!
+
+````
+```svelte example
+<script>
+	import Button from '../lib/Button.svelte'
+</script>
+
+<Button>Button</Button>
+```
+````
+
+## Customization
+
+### Example component
+
+Examples (and the code block) are rendered with a [Svelte component](./src/lib/Example.svelte). You can provide your own if you wish to customize its look.
+
+```js
+import { defineMDSveXConfig as defineConfig } from 'mdsvex'
+import examples from 'mdsvexample'
+
+const config = defineConfig({
+	remarkPlugins: [[examples, { ExampleComponent: '/src/lib/Example.svelte' }]]
+})
+
+export default config
+```
+
+```svelte
+<!-- src/lib/Example.svelte -->
+<script>
+	// the source of the example is provided as a prop if you want it
+	export let src
+</script>
+
+<div class="example">
+	<slot name="example" />
+</div>
+<div class="code">
+	<pre class="language-svelte">
+		<slot name="code" />
+	</pre>
+</code>
+```
