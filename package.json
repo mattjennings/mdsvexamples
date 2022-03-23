@@ -11,11 +11,12 @@
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
 	},
 	"dependencies": {
-		"unplugin": "^0.5.2",
 		"magic-string": "^0.26.1",
 		"prism-svelte": "^0.5.0",
 		"prismjs": "^1.27.0",
-		"unist-util-visit": "^4.1.0"
+		"unist-util-visit": "^4.1.0",
+		"unplugin": "^0.5.2",
+		"upath": "^2.0.1"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
