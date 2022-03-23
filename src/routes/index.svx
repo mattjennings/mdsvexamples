@@ -1,14 +1,11 @@
-# Button component
+# Button
 
-Here is an example:
+An example of how to use our Button component
 
 ```svelte example
 <script>
     import Button from '$lib/Button.svelte'
-    let label = "hello"
-    label = `${label} world`
 </script>
 
-<Button>{label}</Button>
-
+<Button>Button</Button>
 ```

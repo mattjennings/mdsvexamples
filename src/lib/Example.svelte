@@ -1,7 +1,7 @@
 <script>
 	export let src = undefined
 
-	// just to suppress vite-plugin-svelte warning about src being unused
+	// suppresses vite-plugin-svelte warning about src being unused
 	$: src
 </script>
 
