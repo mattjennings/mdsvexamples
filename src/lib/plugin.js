@@ -1,14 +1,8 @@
 import { createUnplugin } from 'unplugin'
-import { EXAMPLE_COMPONENT_PREFIX, EXAMPLE_MODULE_PREFIX } from './remark.js'
+import { EXAMPLE_MODULE_PREFIX } from './remark.js'
 import path from 'upath'
-import MagicString from 'magic-string'
 import { unescape } from './util.js'
-
-// finds the value of the src prop on <Example /> so we can parse the contents into a virtual file
-const RE_SRC = new RegExp(
-	`src: (\\/\\* ${EXAMPLE_COMPONENT_PREFIX}(\\d) \\*\\/ )String.raw\`([\\s\\S*]*?)(?<!\\\\)\``,
-	'gm'
-)
+import ast from 'abstract-syntax-tree'
 
 export default createUnplugin(
 	(
@@ -44,45 +38,62 @@ export default createUnplugin(
 			},
 			transform(code, id) {
 				if (extensions.some((ext) => id.endsWith(ext))) {
-					const matches = code.matchAll(RE_SRC)
+					const tree = ast.parse(code)
 
-					const s = new MagicString(code)
+					// find all __mdsvexample_src props
+					const exampleSrcNodes = ast.find(tree, {
+						type: 'Property',
+						key: {
+							name: '__mdsvexample_src'
+						}
+					})
 
-					for (const [, comment, i, src] of matches) {
-						// change path of module so that it's sibling to the mdsvex file
-						const base = path.relative(process.cwd(), id)
-						const importPath = path.join(base, `${EXAMPLE_MODULE_PREFIX}${i}.svelte`)
+					exampleSrcNodes.forEach((exampleSrcNode, i) => {
+						const [valueNode] = ast.find(exampleSrcNode, {
+							type: 'TemplateElement'
+						})
 
-						// store example code
-						examples[importPath] = unescape(src)
+						if (valueNode) {
+							// change path of module so that it's a sibling to the mdsvex file
+							const base = path.relative(process.cwd(), id)
+							const importPath = path.join(base, `${EXAMPLE_MODULE_PREFIX}${i}.svelte`)
 
-						// update mdsvex component
-						s
-							// update import path
-							.replace(
-								new RegExp(
-									`import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${EXAMPLE_MODULE_PREFIX}${i}.svelte"`,
-									'g'
-								),
-								`import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${importPath}"`
-							)
-							// remove comment used to mark where code is
-							.replace(comment, '')
-					}
+							// store example code
+							examples[importPath] = unescape(valueNode.value.raw)
+
+							// rename the __mdsvexample_src prop to src
+							ast.replace(tree, (node) => {
+								if (node === exampleSrcNode) {
+									exampleSrcNode.key.name = 'src'
+								}
+							})
+
+							// update the import path
+							ast.replace(tree, (node) => {
+								if (
+									node.type === 'ImportDeclaration' &&
+									node.source.value === `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
+								) {
+									node.source.value = importPath
+								}
+								return node
+							})
+						}
+					})
 
 					return {
-						code: s.toString(),
+						code: ast.generate(tree),
 						/** @type {any} */
-						map: s.generateMap()
-					}
-				}
-
-				if (id.includes(EXAMPLE_MODULE_PREFIX)) {
-					return {
-						code,
 						map: {
 							mappings: null
 						}
+					}
+				}
+
+				return {
+					code,
+					map: {
+						mappings: null
 					}
 				}
 			},

@@ -12,7 +12,7 @@
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
 	},
 	"dependencies": {
-		"magic-string": "^0.26.1",
+		"abstract-syntax-tree": "^2.20.5",
 		"prism-svelte": "^0.5.0",
 		"prismjs": "^1.27.0",
 		"unist-util-visit": "^4.1.0",

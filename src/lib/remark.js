@@ -11,8 +11,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const RE_SCRIPT_START =
 	/<script(?:\s+?[a-zA-z]+(=(?:["']){0,1}[a-zA-Z0-9]+(?:["']){0,1}){0,1})*\s*?>/
 
-export const EXAMPLE_MODULE_PREFIX = '___mdsvex_example___'
-export const EXAMPLE_COMPONENT_PREFIX = 'MdsvexExample___'
+export const EXAMPLE_MODULE_PREFIX = '___mdsvexample___'
+export const EXAMPLE_COMPONENT_PREFIX = 'Mdsvexample___'
 
 export default function (options = {}) {
 	const { ExampleComponent = path.resolve(__dirname, 'Example.svelte') } = options
@@ -26,8 +26,7 @@ export default function (options = {}) {
 			if (languages.includes(node.lang) && node.meta && node.meta.includes('example')) {
 				// add a comment so we can mark where the src is for each example
 				// this is then searched for in plugin.js to create virtual files using this as the file content
-				const src =
-					`/* ${EXAMPLE_COMPONENT_PREFIX}${examples} */` + `String.raw\`${escape(node.value)}\``
+				const src = `String.raw\`${escape(node.value)}\``
 
 				// generate the highlighted code
 				const highlighted = Prism.highlight(node.value, Prism.languages.svelte, 'svelte')
@@ -37,7 +36,7 @@ export default function (options = {}) {
 				node.children = [
 					{
 						type: 'text',
-						value: `<Example src={${src}}>
+						value: `<Example __mdsvexample_src={${src}}>
 	<slot slot="example"><${EXAMPLE_COMPONENT_PREFIX}${examples} /></slot>
 	<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
 </Example>`
