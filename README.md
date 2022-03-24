@@ -113,7 +113,7 @@ Examples (and the code block) are rendered with a [Svelte component](./src/lib/E
 
 ```js
 import { defineMDSveXConfig as defineConfig } from 'mdsvex'
-import examples from 'mdsvexample'
+import examples from 'mdsvexamples'
 
 const config = defineConfig({
 	remarkPlugins: [[examples, { ExampleComponent: '/src/lib/Example.svelte' }]]
