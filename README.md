@@ -150,8 +150,6 @@ export default config
 	<slot name="example" />
 </div>
 <div class="code">
-	<pre class="language-svelte">
-		<slot name="code" />
-	</pre>
-</code>
+	<pre class="language-svelte"><slot name="code" /></pre>
+</div>
 ```
