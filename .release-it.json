@@ -1,6 +1,6 @@
 {
 	"hooks": {
-		"before:init": "npm run build"
+		"after:bump": "npm run build"
 	},
 	"git": {
 		"requireCleanWorkingDir": true
