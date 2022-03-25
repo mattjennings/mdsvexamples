@@ -18,18 +18,24 @@ export default function (options = {}) {
 	const { ExampleComponent = path.resolve(__dirname, 'Example.svelte') } = options
 
 	return function transformer(tree) {
-		let examples = 0
+		let examples = []
 
 		visit(tree, 'code', (node) => {
 			const languages = ['svelte', 'html']
+			const { csr, example } = parseMeta(node.meta || '')
+
 			// find svelte code blocks with meta to trigger example
-			if (languages.includes(node.lang) && node.meta && node.meta.includes('example')) {
+			if (example && languages.includes(node.lang)) {
 				// add a comment so we can mark where the src is for each example
 				// this is then searched for in plugin.js to create virtual files using this as the file content
 				const src = `String.raw\`${escape(node.value)}\``
 
+				examples.push({ csr })
+
 				// generate the highlighted code
 				const highlighted = Prism.highlight(node.value, Prism.languages.svelte, 'svelte')
+
+				const mdsvexampleComponentName = `${EXAMPLE_COMPONENT_PREFIX}${examples.length - 1}`
 
 				// convert markdown type to svelte syntax, where mdsvex will parse
 				node.type = 'paragaph'
@@ -37,23 +43,34 @@ export default function (options = {}) {
 					{
 						type: 'text',
 						value: `<Example __mdsvexample_src={${src}}>
-	<slot slot="example"><${EXAMPLE_COMPONENT_PREFIX}${examples} /></slot>
-	<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
-</Example>`
+									<slot slot="example">${
+										csr
+											? `
+											{#if typeof window !== 'undefined'}
+												{#await import("${EXAMPLE_MODULE_PREFIX}${examples.length - 1}.svelte") then module}
+													{@const ${mdsvexampleComponentName} = module.default}
+													<${mdsvexampleComponentName} />
+												{/await}
+											{/if}`
+											: `<${mdsvexampleComponentName} />`
+									}</slot>
+									<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
+								</Example>`
 					}
 				]
 				delete node.lang
 				delete node.meta
 				delete node.value
-				examples += 1
 			}
 		})
 
 		// add imports for each generated example
 		let scripts = `import Example from "${ExampleComponent}";\n`
-		for (let i = 0; i < examples; i++) {
-			scripts += `import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${EXAMPLE_MODULE_PREFIX}${i}.svelte";\n`
-		}
+		examples.forEach((example, i) => {
+			if (!example.csr) {
+				scripts += `import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${EXAMPLE_MODULE_PREFIX}${i}.svelte";\n`
+			}
+		})
 
 		let is_script = false
 
@@ -75,4 +92,17 @@ export default function (options = {}) {
 			})
 		}
 	}
+}
+
+export function parseMeta(meta) {
+	const options = {}
+	const meta_parts = meta.split(' ')
+
+	for (let i = 0; i < meta_parts.length; i++) {
+		const [key, value] = meta_parts[i].split('=')
+
+		options[key] = value === 'false' ? false : true
+	}
+
+	return options
 }

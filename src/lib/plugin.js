@@ -71,7 +71,7 @@ export default createUnplugin(
 							// update the import path
 							ast.replace(tree, (node) => {
 								if (
-									node.type === 'ImportDeclaration' &&
+									(node.type === 'ImportDeclaration' || node.type === 'ImportExpression') &&
 									node.source.value === `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
 								) {
 									node.source.value = importPath

@@ -105,6 +105,23 @@ Imports also work!
 ```
 ````
 
+## Options
+
+### csr
+
+Examples with `csr` will only be imported & rendered client-side. This is useful for examples that consume
+libraries that may have issues server-side.
+
+````
+```svelte example csr
+<script>
+	import BrowserOnlyComponent from '../lib/BrowserOnlyComponent.svelte'
+</script>
+
+<BrowserOnlyComponent />
+```
+````
+
 ## Customization
 
 ### Example component
