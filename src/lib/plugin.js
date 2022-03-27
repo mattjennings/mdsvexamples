@@ -56,7 +56,7 @@ export default createUnplugin(
 						if (valueNode) {
 							// change path of module so that it's a sibling to the mdsvex file
 							const base = path.relative(process.cwd(), id)
-							const importPath = path.join(base, `${EXAMPLE_MODULE_PREFIX}${i}.svelte`)
+							const importPath = `${base}${EXAMPLE_MODULE_PREFIX}${i}.svelte`
 
 							// store example code
 							examples[importPath] = unescape(valueNode.value.raw)
