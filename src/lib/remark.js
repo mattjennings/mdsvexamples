@@ -22,7 +22,8 @@ export default function (options = {}) {
 
 		visit(tree, 'code', (node) => {
 			const languages = ['svelte', 'html']
-			const { csr, example } = parseMeta(node.meta || '')
+			const meta = parseMeta(node.meta || '')
+			const { csr, example } = meta
 
 			// find svelte code blocks with meta to trigger example
 			if (example && languages.includes(node.lang)) {
@@ -42,7 +43,7 @@ export default function (options = {}) {
 				node.children = [
 					{
 						type: 'text',
-						value: `<Example __mdsvexample_src={${src}}>
+						value: `<Example __mdsvexample_src={${src}} meta={${JSON.stringify(meta)}}>
 									<slot slot="example">${
 										csr
 											? `

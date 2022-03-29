@@ -1,8 +1,9 @@
 <script>
 	export let src = undefined
+	export let meta = undefined
 
-	// suppresses vite-plugin-svelte warning about src being unused
-	$: src
+	// suppress vite-plugin-svelte warning about unused props
+	$: src, meta
 </script>
 
 <div class="root">
