@@ -12,12 +12,46 @@ export default createUnplugin(
 		options = {}
 	) => {
 		const { extensions = ['.svelte.md', '.md', '.svx'] } = options
-		const examples = {}
 
+		/**
+		 * Extracted examples as individual virtual files
+		 *
+		 * @type {Map<string, { src: string, updated: number}>}
+		 */
+		const virtualFiles = new Map()
+
+		/**
+		 * @type {import('vite').ViteDevServer}
+		 */
 		let viteServer
 
+		/**
+		 * Iterates over each __mdsvexample_src node in generated svelte file
+		 *
+		 * @param {any} tree
+		 * @param {(srcNode: any, valueNode: any, index: number) => void} cb
+		 */
+		function iterateMdsvexSrcNodes(tree, cb) {
+			const exampleSrcNodes = ast.find(tree, {
+				type: 'Property',
+				key: {
+					name: '__mdsvexample_src'
+				}
+			})
+
+			exampleSrcNodes.map((node, i) => {
+				const [valueNode] = ast.find(node, {
+					type: 'TemplateElement'
+				})
+
+				if (valueNode) {
+					cb(node, valueNode, i)
+				}
+			})
+		}
+
 		return {
-			name: 'mdsvexample-plugin',
+			name: 'mdsvexamples-plugin',
 			transformInclude(id) {
 				return extensions.some((ext) => id.endsWith(ext)) || id.includes(EXAMPLE_MODULE_PREFIX)
 			},
@@ -28,57 +62,61 @@ export default createUnplugin(
 			},
 			load(id) {
 				if (id.includes(EXAMPLE_MODULE_PREFIX)) {
-					if (examples[id]) {
-						const code = examples[id]
+					if (virtualFiles.has(id)) {
+						const code = virtualFiles.get(id).src
 						return code
+					} else {
+						this.warn(`Example src not found for ${id}`)
 					}
-
-					throw new Error(`Example src not found for ${id}`)
 				}
 			},
+
 			transform(code, id) {
 				if (extensions.some((ext) => id.endsWith(ext))) {
 					const tree = ast.parse(code)
+					const now = Date.now()
 
-					// find all __mdsvexample_src props
-					const exampleSrcNodes = ast.find(tree, {
-						type: 'Property',
-						key: {
-							name: '__mdsvexample_src'
+					iterateMdsvexSrcNodes(tree, (srcNode, valueNode, i) => {
+						const exampleId = `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
+						const virtualId = path.join('/', path.relative(process.cwd(), id + exampleId))
+
+						// update virtualFiles with code from example
+						const prev = virtualFiles.get(virtualId) && virtualFiles.get(virtualId).src
+						const next = unescape(valueNode.value.raw)
+
+						if (next !== prev) {
+							virtualFiles.set(virtualId, { src: next, updated: now })
+
+							// invalidate module for hmr
+							if (viteServer) {
+								const mod = viteServer.moduleGraph.getModuleById(virtualId)
+								const parentMod = viteServer.moduleGraph.getModuleById(id)
+								if (mod) {
+									viteServer.moduleGraph.invalidateModule(mod)
+									viteServer.moduleGraph.invalidateModule(parentMod)
+								}
+							}
 						}
-					})
 
-					exampleSrcNodes.forEach((exampleSrcNode, i) => {
-						const [valueNode] = ast.find(exampleSrcNode, {
-							type: 'TemplateElement'
+						// rename the __mdsvexample_src prop to src
+						ast.replace(tree, (node) => {
+							if (node === srcNode) {
+								srcNode.key.name = 'src'
+							}
 						})
 
-						if (valueNode) {
-							// change path of module so that it's a sibling to the mdsvex file
-							const base = path.relative(process.cwd(), id)
-							const importPath = `${base}${EXAMPLE_MODULE_PREFIX}${i}.svelte`
-
-							// store example code
-							examples[importPath] = unescape(valueNode.value.raw)
-
-							// rename the __mdsvexample_src prop to src
-							ast.replace(tree, (node) => {
-								if (node === exampleSrcNode) {
-									exampleSrcNode.key.name = 'src'
-								}
-							})
-
-							// update the import path
-							ast.replace(tree, (node) => {
-								if (
-									(node.type === 'ImportDeclaration' || node.type === 'ImportExpression') &&
-									node.source.value === `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
-								) {
-									node.source.value = importPath
-								}
-								return node
-							})
-						}
+						// update the import path
+						ast.replace(tree, (node) => {
+							if (
+								(node.type === 'ImportDeclaration' || node.type === 'ImportExpression') &&
+								node.source.value === `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
+							) {
+								const fileName = `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
+								const importPath = path.resolve(process.cwd(), id + fileName)
+								node.source.value = importPath
+							}
+							return node
+						})
 					})
 
 					return {
@@ -102,14 +140,30 @@ export default createUnplugin(
 				configureServer(server) {
 					viteServer = server
 				},
-				handleHotUpdate() {
-					// reload page when example is updated - would be nice to trigger HMR on owner svelte component instead
-					Object.keys(examples).forEach((key) => {
-						viteServer.moduleGraph.invalidateModule(viteServer.moduleGraph.getModuleById(key))
-						viteServer.ws.send({
-							type: 'full-reload'
-						})
-					})
+				async handleHotUpdate(ctx) {
+					const { server } = ctx
+					const modules = []
+
+					// return virtual file modules for parent file
+					if (extensions.some((ext) => ctx.file.endsWith(ext))) {
+						const files = [...virtualFiles.entries()]
+
+						files
+							.map(([id, file]) => ({
+								id,
+								parent: id.split(EXAMPLE_MODULE_PREFIX)[0],
+								updated: file.updated
+							}))
+							.filter((file) => {
+								return ctx.file.endsWith(file.parent)
+							})
+							.forEach((file) => {
+								const mod = server.moduleGraph.getModuleById(file.id)
+								modules.push(mod)
+							})
+					}
+
+					return [...ctx.modules, ...modules]
 				}
 			}
 		}
