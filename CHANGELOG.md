@@ -1,6 +1,11 @@
 
 
-## [0.1.0-beta.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.1.0-beta.0...0.1.0-beta.1) (2022-03-30)
+## [0.1.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.0.9...0.1.0) (2022-03-30)
+
+
+### Features
+
+* support HMR for examples ([9d2226b](https://github.com/mattjennings/mdsvex-code-preview/commit/9d2226b20e5d5d263fab6de0a4da2aa0eceb83c4))## [0.1.0-beta.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.1.0-beta.0...0.1.0-beta.1) (2022-03-30)
 
 
 ### Bug Fixes
