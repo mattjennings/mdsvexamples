@@ -1,6 +1,11 @@
 
 
-### [0.2.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.0...0.2.1) (2022-03-31)
+### [0.2.2](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.1...0.2.2) (2022-03-31)
+
+
+### Bug Fixes
+
+* relative imports in examples ([f69d424](https://github.com/mattjennings/mdsvex-code-preview/commit/f69d42416ec1426263bf6fdf6e10c465f50dd894))### [0.2.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.0...0.2.1) (2022-03-31)
 
 
 ### Bug Fixes
