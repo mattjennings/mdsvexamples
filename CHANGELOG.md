@@ -1,6 +1,11 @@
 
 
-### [0.2.2](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.1...0.2.2) (2022-03-31)
+### [0.2.3](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.2...0.2.3) (2022-03-31)
+
+
+### Bug Fixes
+
+* resolved module ids on windows ([af347ed](https://github.com/mattjennings/mdsvex-code-preview/commit/af347edfa5906ee57bfa33006be301ea00c337be))### [0.2.2](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.1...0.2.2) (2022-03-31)
 
 
 ### Bug Fixes
