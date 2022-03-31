@@ -1,6 +1,11 @@
 
 
-## [0.2.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.1.0...0.2.0) (2022-03-31)
+### [0.2.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.0...0.2.1) (2022-03-31)
+
+
+### Bug Fixes
+
+* production builds failing to resolve example modules ([80217b1](https://github.com/mattjennings/mdsvex-code-preview/commit/80217b120f5462552f85d88997b7bf8de3577f66))## [0.2.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.1.0...0.2.0) (2022-03-31)
 
 
 ### Features
