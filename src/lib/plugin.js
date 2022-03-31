@@ -51,9 +51,7 @@ export default createUnplugin(
 		}
 
 		function getVirtualId(parentId, id) {
-			// HMR seems to cut off the first char, resulting in something like /rc/.. instead of /src
-			// so we prepend with /
-			return path.join('/', path.relative(process.cwd(), parentId + id))
+			return parentId + id
 		}
 
 		return {
@@ -63,7 +61,11 @@ export default createUnplugin(
 			},
 			resolveId(id) {
 				if (id.includes(EXAMPLE_MODULE_PREFIX)) {
-					return id
+					// during production build, id is an absolute path.
+					// during dev, it is relative.
+					// force it to always be absolute
+					const _id = id.includes(process.cwd()) ? id : path.join(process.cwd(), id)
+					return _id
 				}
 			},
 			load(id) {
@@ -125,7 +127,6 @@ export default createUnplugin(
 						})
 					})
 
-					// console.log(ast.generate(tree))
 					return {
 						code: ast.generate(tree),
 						/** @type {any} */
@@ -147,6 +148,7 @@ export default createUnplugin(
 				configureServer(server) {
 					viteServer = server
 				},
+
 				async handleHotUpdate(ctx) {
 					const { server } = ctx
 					const modules = []
@@ -166,11 +168,13 @@ export default createUnplugin(
 							})
 							.forEach((file) => {
 								const mod = server.moduleGraph.getModuleById(file.id)
-								modules.push(mod)
+								if (mod) {
+									modules.push(mod)
+								}
 							})
 					}
 
-					return [...ctx.modules, ...modules]
+					return [...modules, ...ctx.modules]
 				}
 			}
 		}
