@@ -3,7 +3,9 @@
 	"version": "0.2.3",
 	"scripts": {
 		"dev": "svelte-kit dev",
+		"build:site": "svelte-kit build",
 		"build": "svelte-kit package",
+		"test": "playwright test",
 		"preview": "svelte-kit preview",
 		"prepare": "svelte-kit sync && husky install",
 		"release": "release-it --npm.tag=latest",
@@ -16,10 +18,11 @@
 		"prism-svelte": "^0.5.0",
 		"prismjs": "^1.27.0",
 		"unist-util-visit": "^4.1.0",
-		"unplugin": "^0.5.2",
+		"unplugin": "^0.6.1",
 		"upath": "^2.0.1"
 	},
 	"devDependencies": {
+		"@playwright/test": "1.20.0",
 		"@commitlint/cli": "^16.2.3",
 		"@commitlint/config-conventional": "^16.2.1",
 		"@release-it/conventional-changelog": "^4.2.2",
@@ -41,7 +44,7 @@
 		"svelte2tsx": "^0.5.6",
 		"tailwindcss": "^3.0.12",
 		"typescript": "^4.6.2",
-		"vite": "^2.8.6"
+		"vite": "^2.9.1"
 	},
 	"type": "module"
 }

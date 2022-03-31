@@ -11,10 +11,15 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		package: {
-			files: (file) => file !== 'Button.svelte'
+			files: (file) => !file.includes('site')
 		},
 		vite: {
-			plugins: [examples]
+			plugins: [examples],
+			resolve: {
+				alias: {
+					$routes: '/src/routes'
+				}
+			}
 		}
 	},
 

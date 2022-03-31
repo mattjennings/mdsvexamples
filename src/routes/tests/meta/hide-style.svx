@@ -1,0 +1,9 @@
+```svelte example hideStyle
+<button>hello</button>
+
+<style>
+  button {
+    background-color: blue
+  }
+</style>
+```
