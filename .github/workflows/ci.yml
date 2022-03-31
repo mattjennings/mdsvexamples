@@ -1,3 +1,4 @@
+on: push
 runs-on: ${{ matrix.os }}
 strategy:
   matrix:
