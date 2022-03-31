@@ -1,0 +1,7 @@
+```svelte example hideScript
+<script>
+  console.log('hello from hidden script')
+</script>
+
+<button>hello</button>
+```

@@ -1,0 +1,7 @@
+```svelte example csr
+<script>
+    import CSR from './_CSR.svelte'
+</script>
+
+<CSR />
+```
