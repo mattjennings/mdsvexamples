@@ -149,7 +149,7 @@ the `src` prop if you have a custom Example component.
 <button>Button</button>
 
 <style>
-	.button {
+	button {
 		background: green;
 	}
 </style>
