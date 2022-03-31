@@ -6,7 +6,7 @@
 		"build": "svelte-kit package",
 		"preview": "svelte-kit preview",
 		"prepare": "svelte-kit sync && husky install",
-		"release": "release-it",
+		"release": "release-it --npm.tag=latest",
 		"prerelease": "release-it --preRelease=beta --npm.tag=next",
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
