@@ -64,7 +64,8 @@ export default createUnplugin(
 					// during production build, id is an absolute path.
 					// during dev, it is relative.
 					// force it to always be absolute
-					const _id = id.includes(process.cwd()) ? id : path.join(process.cwd(), id)
+					const cwd = path.toUnix(process.cwd())
+					const _id = id.includes(cwd) ? id : path.join(cwd, id)
 					return _id
 				}
 			},
