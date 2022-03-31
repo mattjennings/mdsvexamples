@@ -98,10 +98,10 @@ export default createUnplugin(
 							}
 						}
 
-						// rename the __mdsvexample_src prop to src
+						// remove the __mdsvexample_src prop
 						ast.replace(tree, (node) => {
 							if (node === srcNode) {
-								srcNode.key.name = 'src'
+								ast.remove(tree, node)
 							}
 						})
 

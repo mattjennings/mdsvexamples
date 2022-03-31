@@ -107,9 +107,11 @@ Imports also work!
 
 ## Options
 
+Examples can take additional options with each code block
+
 ### csr
 
-Examples with `csr` will only be imported & rendered client-side. This is useful for examples that consume
+Forces the example to only be imported & rendered client-side. This is useful for examples that consume
 libraries that may have issues server-side.
 
 ````
@@ -119,6 +121,38 @@ libraries that may have issues server-side.
 </script>
 
 <BrowserOnlyComponent />
+```
+````
+
+### hideScript
+
+Hides `<script>` tags from being shown in the displayed code. This will also remove it from
+the `src` prop if you have a custom Example component.
+
+````
+```svelte example hideScript
+<script>
+	console.log("Hello World!")
+</script>
+
+<button>Button</button>
+```
+````
+
+### hideStyle
+
+Hides `<style>` tags from being shown in the displayed code. This will also remove it from
+the `src` prop if you have a custom Example component.
+
+````
+```svelte example hideStyle
+<button>Button</button>
+
+<style>
+	.button {
+		background: green;
+	}
+</style>
 ```
 ````
 

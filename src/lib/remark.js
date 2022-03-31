@@ -10,6 +10,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // regex to find <script> block in svelte
 const RE_SCRIPT_START =
 	/<script(?:\s+?[a-zA-z]+(=(?:["']){0,1}[a-zA-Z0-9]+(?:["']){0,1}){0,1})*\s*?>/
+const RE_SCRIPT_BLOCK = /(<script[\s\S]*?>)([\s\S]*?)(<\/script>)/g
+const RE_STYLE_BLOCK = /(<style[\s\S]*?>)([\s\S]*?)(<\/style>)/g
 
 export const EXAMPLE_MODULE_PREFIX = '___mdsvexample___'
 export const EXAMPLE_COMPONENT_PREFIX = 'Mdsvexample___'
@@ -27,36 +29,14 @@ export default function (options = {}) {
 
 			// find svelte code blocks with meta to trigger example
 			if (example && languages.includes(node.lang)) {
-				// add a comment so we can mark where the src is for each example
-				// this is then searched for in plugin.js to create virtual files using this as the file content
-				const src = `String.raw\`${escape(node.value)}\``
-
+				const value = createExampleComponent(node.value, meta, examples.length)
 				examples.push({ csr })
 
-				// generate the highlighted code
-				const highlighted = Prism.highlight(node.value, Prism.languages.svelte, 'svelte')
-
-				const mdsvexampleComponentName = `${EXAMPLE_COMPONENT_PREFIX}${examples.length - 1}`
-
-				// convert markdown type to svelte syntax, where mdsvex will parse
 				node.type = 'paragaph'
 				node.children = [
 					{
 						type: 'text',
-						value: `<Example __mdsvexample_src={${src}} meta={${JSON.stringify(meta)}}>
-									<slot slot="example">${
-										csr
-											? `
-											{#if typeof window !== 'undefined'}
-												{#await import("${EXAMPLE_MODULE_PREFIX}${examples.length - 1}.svelte") then module}
-													{@const ${mdsvexampleComponentName} = module.default}
-													<${mdsvexampleComponentName} />
-												{/await}
-											{/if}`
-											: `<${mdsvexampleComponentName} />`
-									}</slot>
-									<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
-								</Example>`
+						value
 					}
 				]
 				delete node.lang
@@ -106,4 +86,47 @@ export function parseMeta(meta) {
 	}
 
 	return options
+}
+
+function formatCode(code, meta) {
+	if (meta.hideScript) {
+		code = code.replace(RE_SCRIPT_BLOCK, '')
+	}
+
+	if (meta.hideStyle) {
+		code = code.replace(RE_STYLE_BLOCK, '')
+	}
+
+	// remove leading/trailing whitespace and line breaks
+	return code.replace(/^\s+|\s+$/g, '')
+}
+
+function createExampleComponent(value, meta, index) {
+	const mdsvexampleComponentName = `${EXAMPLE_COMPONENT_PREFIX}${index}`
+
+	const code = formatCode(value, meta)
+	const highlighted = Prism.highlight(code, Prism.languages.svelte, 'svelte')
+
+	// gets parsed as virtual file content in vite plugin and then removed
+	const __mdsvexample_src = `String.raw\`${escape(value)}\``
+	const src = `String.raw\`${escape(code)}\``
+
+	return `<Example 
+						__mdsvexample_src={${__mdsvexample_src}} 
+						src={${src}} 
+						meta={${JSON.stringify(meta)}}
+					>
+						<slot slot="example">${
+							meta.csr
+								? `
+								{#if typeof window !== 'undefined'}
+									{#await import("${EXAMPLE_MODULE_PREFIX}${index}.svelte") then module}
+										{@const ${mdsvexampleComponentName} = module.default}
+										<${mdsvexampleComponentName} />
+									{/await}
+								{/if}`
+								: `<${mdsvexampleComponentName} />`
+						}</slot>
+						<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
+			</Example>`
 }
