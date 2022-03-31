@@ -1,6 +1,11 @@
 
 
-## [0.1.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.0.9...0.1.0) (2022-03-30)
+## [0.2.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.1.0...0.2.0) (2022-03-31)
+
+
+### Features
+
+* hide scripts and style tags from example ([dc90750](https://github.com/mattjennings/mdsvex-code-preview/commit/dc90750ad2835ed6a0d680bc639d80d47af278ce))## [0.1.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.0.9...0.1.0) (2022-03-30)
 
 
 ### Features
