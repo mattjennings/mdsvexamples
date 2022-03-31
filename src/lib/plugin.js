@@ -50,6 +50,12 @@ export default createUnplugin(
 			})
 		}
 
+		function getVirtualId(parentId, id) {
+			// HMR seems to cut off the first char, resulting in something like /rc/.. instead of /src
+			// so we prepend with /
+			return path.join('/', path.relative(process.cwd(), parentId + id))
+		}
+
 		return {
 			name: 'mdsvexamples-plugin',
 			transformInclude(id) {
@@ -78,7 +84,7 @@ export default createUnplugin(
 
 					iterateMdsvexSrcNodes(tree, (srcNode, valueNode, i) => {
 						const exampleId = `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
-						const virtualId = path.join('/', path.relative(process.cwd(), id + exampleId))
+						const virtualId = getVirtualId(id, exampleId)
 
 						// update virtualFiles with code from example
 						const prev = virtualFiles.get(virtualId) && virtualFiles.get(virtualId).src
@@ -112,13 +118,14 @@ export default createUnplugin(
 								node.source.value === `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
 							) {
 								const fileName = `${EXAMPLE_MODULE_PREFIX}${i}.svelte`
-								const importPath = path.resolve(process.cwd(), id + fileName)
+								const importPath = getVirtualId(id, fileName)
 								node.source.value = importPath
 							}
 							return node
 						})
 					})
 
+					// console.log(ast.generate(tree))
 					return {
 						code: ast.generate(tree),
 						/** @type {any} */
