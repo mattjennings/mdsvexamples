@@ -63,20 +63,19 @@ import { defineConfig } from 'vite'
 import examples from 'mdsvexamples/vite'
 
 export default defineConfig({
-	plugins: [examples]
+  plugins: [examples]
 })
 
 // or svelte.config.js if you're using SvelteKit
 import examples from 'mdsvexamples/vite'
 
 const config = {
-	kit: {
-		/* ... */
-
-		vite: {
-			plugins: [examples]
-		}
-	},
+  kit: {
+    /* ... */
+    vite: {
+      plugins: [examples]
+    }
+  },
 }
 
 export default config
