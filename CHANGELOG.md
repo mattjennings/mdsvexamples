@@ -1,6 +1,11 @@
 
 
-### [0.2.3](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.2...0.2.3) (2022-03-31)
+## [0.3.0-beta.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.3...0.3.0-beta.0) (2022-04-08)
+
+
+### Features
+
+* allow custom components per example ([3d9fac6](https://github.com/mattjennings/mdsvex-code-preview/commit/3d9fac6298c6741f60edeeaa25da5ed75e595cc8))### [0.2.3](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.2...0.2.3) (2022-03-31)
 
 
 ### Bug Fixes
