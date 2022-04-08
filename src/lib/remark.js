@@ -22,6 +22,7 @@ export default function (options = {}) {
   // legacy
   if (options.ExampleComponent) {
     defaults.Wrapper = options.ExampleComponent
+    console.warn(`ExampleComponent is deprecated, use defaults.Wrapper instead`)
   }
 
   return function transformer(tree) {
