@@ -1,6 +1,12 @@
 
 
-## [0.3.0-beta.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.3...0.3.0-beta.0) (2022-04-08)
+## [0.3.0-beta.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.0-beta.0...0.3.0-beta.1) (2022-04-08)
+
+
+### Bug Fixes
+
+* add deprecation warning about ExampleComponent config ([2558f4f](https://github.com/mattjennings/mdsvex-code-preview/commit/2558f4f46cbd71f4a4e00468ffd4dcf8e6f4a074))
+* meta not being escaped ([276bf03](https://github.com/mattjennings/mdsvex-code-preview/commit/276bf0396cbc0824b0df87f3edd3d1cb2e5595f2))## [0.3.0-beta.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.2.3...0.3.0-beta.0) (2022-04-08)
 
 
 ### Features
