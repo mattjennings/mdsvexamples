@@ -1,5 +1,5 @@
-import plugin from './plugin.js';
+import plugin from './plugin.js'
 
-const esbuild = plugin.esbuild();
+const esbuild = plugin.esbuild()
 
-export default esbuild;
+export default esbuild

@@ -40,14 +40,14 @@ import { defineMDSveXConfig as defineConfig } from 'mdsvex'
 import examples from 'mdsvexamples'
 
 const config = defineConfig({
-	extensions: ['.svelte.md', '.md', '.svx'],
+  extensions: ['.svelte.md', '.md', '.svx'],
 
-	smartypants: {
-		dashes: 'oldschool'
-	},
+  smartypants: {
+    dashes: 'oldschool'
+  },
 
-	remarkPlugins: [examples],
-	rehypePlugins: []
+  remarkPlugins: [examples],
+  rehypePlugins: []
 })
 
 export default config
@@ -112,17 +112,17 @@ also provide them per-example as "meta" tags in the code block.
 
 ```js
 {
-	remarkPlugins: [
-		[
-			examples,
-			{
-				defaults: {
-					foo: true,
-					bar: 'baz'
-				}
-			}
-		]
-	]
+  remarkPlugins: [
+    [
+      examples,
+      {
+        defaults: {
+          foo: true,
+          bar: 'baz'
+        }
+      }
+    ]
+  ]
 }
 ```
 
@@ -140,16 +140,16 @@ Example code blocks are rendered with a [Svelte component](./src/lib/Example.sve
 
 ```js
 {
-	remarkPlugins: [
-		[
-			examples,
-			{
-				defaults: {
-					Wrapper: '/src/lib/Example.svelte'
-				}
-			}
-		]
-	]
+  remarkPlugins: [
+    [
+      examples,
+      {
+        defaults: {
+          Wrapper: '/src/lib/Example.svelte'
+        }
+      }
+    ]
+  ]
 }
 ```
 

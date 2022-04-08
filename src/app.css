@@ -4,8 +4,8 @@
 @tailwind utilities;
 
 h1 {
-	@apply text-lg font-bold;
+  @apply text-lg font-bold;
 }
 body {
-	padding: 0.5rem;
+  padding: 0.5rem;
 }

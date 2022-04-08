@@ -1,5 +1,5 @@
-import plugin from './plugin.js';
+import plugin from './plugin.js'
 
-const rollup = plugin.rollup();
+const rollup = plugin.rollup()
 
-export default rollup;
+export default rollup

@@ -1,5 +1,5 @@
-import plugin from './plugin.js';
+import plugin from './plugin.js'
 
-const vite = plugin.vite();
+const vite = plugin.vite()
 
-export default vite;
+export default vite
