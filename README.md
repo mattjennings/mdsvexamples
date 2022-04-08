@@ -163,21 +163,21 @@ When provided as code block meta, it can be relative to the file
 ```
 ````
 
-```svelte
+```html
 <!-- src/lib/Example.svelte -->
 <script>
-	// the source of the example, if you want it
-	export let src
+  // the source of the example, if you want it
+  export let src
 
-	// all meta tags of the code block
-	export let meta
+  // all meta tags of the code block
+  export let meta
 </script>
 
 <div class="example">
-	<slot name="example" />
+  <slot name="example" />
 </div>
 <div class="code">
-	<pre class="language-svelte"><slot name="code" /></pre>
+  <pre class="language-svelte"><slot name="code" /></pre>
 </div>
 ```
 
@@ -189,7 +189,7 @@ libraries that may have issues server-side.
 ````
 ```svelte example csr
 <script>
-	import BrowserOnlyComponent from '../lib/BrowserOnlyComponent.svelte'
+  import BrowserOnlyComponent from '../lib/BrowserOnlyComponent.svelte'
 </script>
 
 <BrowserOnlyComponent />
@@ -204,7 +204,7 @@ the `src` prop if you have a custom Example component.
 ````
 ```svelte example hideScript
 <script>
-	console.log("Hello World!")
+  console.log("Hello World!")
 </script>
 
 <button>Button</button>
@@ -221,9 +221,9 @@ the `src` prop if you have a custom Example component.
 <button>Button</button>
 
 <style>
-	button {
-		background: green;
-	}
+  button {
+    background: green;
+  }
 </style>
 ```
 ````
