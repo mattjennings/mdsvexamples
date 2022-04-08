@@ -22,3 +22,10 @@ test('hideStyle', async ({ page }) => {
 	await expect(page.locator('text=<style>')).not.toBeVisible()
 	await expect(page.locator('button')).toHaveCSS('background-color', 'rgb(0, 0, 255)')
 })
+
+test('wrapper and custom meta', async ({ page }) => {
+	await page.goto('/tests/meta/wrapper')
+	await expect(
+		page.locator('text={"Wrapper":"./_Wrapper.svelte","example":true,"custom":["hello","world"]}')
+	).toBeVisible()
+})
