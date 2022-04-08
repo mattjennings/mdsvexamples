@@ -127,14 +127,17 @@ function createExampleComponent(value, meta, index) {
   const code = formatCode(value, meta)
   const highlighted = Prism.highlight(code, Prism.languages.svelte, 'svelte')
 
-  // gets parsed as virtual file content in vite plugin and then removed
-  const __mdsvexample_src = `String.raw\`${escape(value)}\``
-  const src = `String.raw\`${escape(code)}\``
+  const props = {
+    // gets parsed as virtual file content in vite plugin and then removed
+    __mdsvexample_src: `String.raw\`${escape(value)}\``,
+    src: `String.raw\`${escape(code)}\``,
+    meta: escape(JSON.stringify(meta))
+  }
 
   return `<Example 
-						__mdsvexample_src={${__mdsvexample_src}} 
-						src={${src}} 
-						meta={${JSON.stringify(meta)}}
+						__mdsvexample_src={${props.__mdsvexample_src}} 
+						src={${props.src}} 
+						meta={${props.meta}}
 					>
 						<slot slot="example">${
               meta.csr
