@@ -17,20 +17,33 @@ export const EXAMPLE_MODULE_PREFIX = '___mdsvexample___'
 export const EXAMPLE_COMPONENT_PREFIX = 'Mdsvexample___'
 
 export default function (options = {}) {
-	const { ExampleComponent = path.resolve(__dirname, 'Example.svelte') } = options
+	const { defaults = {} } = options
+
+	// legacy
+	if (options.ExampleComponent) {
+		defaults.Wrapper = options.ExampleComponent
+	}
 
 	return function transformer(tree) {
 		let examples = []
 
 		visit(tree, 'code', (node) => {
 			const languages = ['svelte', 'html']
-			const meta = parseMeta(node.meta || '')
-			const { csr, example } = meta
+			/**
+			 * @type {Record<string, any>}
+			 */
+			const meta = {
+				Wrapper: path.resolve(__dirname, 'Example.svelte'),
+				...defaults,
+				...parseMeta(node.meta || '')
+			}
+
+			const { csr, example, Wrapper } = meta
 
 			// find svelte code blocks with meta to trigger example
 			if (example && languages.includes(node.lang)) {
 				const value = createExampleComponent(node.value, meta, examples.length)
-				examples.push({ csr })
+				examples.push({ csr, Wrapper: meta.Wrapper || Wrapper })
 
 				node.type = 'paragaph'
 				node.children = [
@@ -46,8 +59,14 @@ export default function (options = {}) {
 		})
 
 		// add imports for each generated example
-		let scripts = `import Example from "${ExampleComponent}";\n`
+		let scripts = ''
 		examples.forEach((example, i) => {
+			const imp = `import Example from "${example.Wrapper}";\n`
+
+			if (!scripts.includes(imp)) {
+				scripts += imp
+			}
+
 			if (!example.csr) {
 				scripts += `import ${EXAMPLE_COMPONENT_PREFIX}${i} from "${EXAMPLE_MODULE_PREFIX}${i}.svelte";\n`
 			}
@@ -75,17 +94,17 @@ export default function (options = {}) {
 	}
 }
 
-export function parseMeta(meta) {
-	const options = {}
-	const meta_parts = meta.split(' ')
+function parseMeta(meta) {
+	const result = {}
+	const meta_parts = meta.split(/ +(?=[\w]+=?)/g)
 
 	for (let i = 0; i < meta_parts.length; i++) {
-		const [key, value] = meta_parts[i].split('=')
+		const [key, value = 'true'] = meta_parts[i].split('=')
 
-		options[key] = value === 'false' ? false : true
+		result[key] = JSON.parse(value)
 	}
 
-	return options
+	return result
 }
 
 function formatCode(code, meta) {

@@ -105,9 +105,81 @@ Imports also work!
 ```
 ````
 
-## Options
+## Customization
 
-Examples can take additional options with each code block
+Examples can take various configurations. The defaults for all can be set in the remark plugin, but you can
+also provide them per-example as "meta" tags in the code block.
+
+```js
+{
+	remarkPlugins: [
+		[
+			examples,
+			{
+				defaults: {
+					foo: true,
+					bar: 'baz'
+				}
+			}
+		]
+	]
+}
+```
+
+````
+```svelte example foo bar="baz"
+
+...
+
+```
+````
+
+### Wrapper
+
+Example code blocks are rendered with a [Svelte component](./src/lib/Example.svelte). You can provide your own if you wish to customize its look or behaviour.
+
+```js
+{
+	remarkPlugins: [
+		[
+			examples,
+			{
+				defaults: {
+					Wrapper: '/src/lib/Example.svelte'
+				}
+			}
+		]
+	]
+}
+```
+
+When provided as code block meta, it can be relative to the file
+
+````
+```svelte example Wrapper="./Example.svelte"
+
+...
+
+```
+````
+
+```svelte
+<!-- src/lib/Example.svelte -->
+<script>
+	// the source of the example, if you want it
+	export let src
+
+	// all meta tags of the code block
+	export let meta
+</script>
+
+<div class="example">
+	<slot name="example" />
+</div>
+<div class="code">
+	<pre class="language-svelte"><slot name="code" /></pre>
+</div>
+```
 
 ### csr
 
@@ -155,35 +227,3 @@ the `src` prop if you have a custom Example component.
 </style>
 ```
 ````
-
-## Customization
-
-### Example component
-
-Examples (and the code block) are rendered with a [Svelte component](./src/lib/Example.svelte). You can provide your own if you wish to customize its look.
-
-```js
-import { defineMDSveXConfig as defineConfig } from 'mdsvex'
-import examples from 'mdsvexamples'
-
-const config = defineConfig({
-	remarkPlugins: [[examples, { ExampleComponent: '/src/lib/Example.svelte' }]]
-})
-
-export default config
-```
-
-```svelte
-<!-- src/lib/Example.svelte -->
-<script>
-	// the source of the example is provided as a prop if you want it
-	export let src
-</script>
-
-<div class="example">
-	<slot name="example" />
-</div>
-<div class="code">
-	<pre class="language-svelte"><slot name="code" /></pre>
-</div>
-```
