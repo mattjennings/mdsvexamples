@@ -1,6 +1,6 @@
 
 
-## [0.3.0-beta.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.0-beta.0...0.3.0-beta.1) (2022-04-08)
+## [0.3.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.0-beta.1...0.3.0) (2022-04-10)## [0.3.0-beta.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.0-beta.0...0.3.0-beta.1) (2022-04-08)
 
 
 ### Bug Fixes
