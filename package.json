@@ -2,11 +2,11 @@
 	"name": "mdsvexamples",
 	"version": "0.3.0",
 	"scripts": {
-		"dev": "svelte-kit dev",
-		"build:site": "svelte-kit build",
+		"dev": "vite dev",
+		"build:site": "vite build",
 		"build": "svelte-kit package",
 		"test": "playwright test",
-		"preview": "svelte-kit preview",
+		"preview": "vite preview",
 		"prepare": "svelte-kit sync && husky install",
 		"release": "release-it --npm.tag=latest",
 		"prerelease": "release-it --preRelease=beta --npm.tag=next",
@@ -18,16 +18,16 @@
 		"prism-svelte": "^0.5.0",
 		"prismjs": "^1.27.0",
 		"unist-util-visit": "^4.1.0",
-		"unplugin": "^0.6.1",
+		"unplugin": "^0.7.2",
 		"upath": "^2.0.1"
 	},
 	"devDependencies": {
-		"@playwright/test": "1.20.0",
 		"@commitlint/cli": "^16.2.3",
 		"@commitlint/config-conventional": "^16.2.1",
-		"@release-it/conventional-changelog": "^4.2.2",
+		"@playwright/test": "1.20.0",
+		"@release-it/conventional-changelog": "^5.0.0",
 		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/kit": "1.0.0-next.377",
 		"autoprefixer": "^10.4.2",
 		"eslint": "^7.32.0",
 		"eslint-config-prettier": "^8.3.0",
@@ -38,13 +38,13 @@
 		"postcss-load-config": "^3.1.1",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.5.0",
-		"release-it": "^14.13.1",
+		"release-it": "^15.1.2",
 		"svelte": "^3.44.0",
 		"svelte-preprocess": "^4.10.1",
 		"svelte2tsx": "^0.5.6",
 		"tailwindcss": "^3.0.12",
 		"typescript": "^4.6.2",
-		"vite": "^2.9.1"
+		"vite": "^3.0.0"
 	},
 	"type": "module"
 }
