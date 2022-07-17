@@ -1,5 +1,11 @@
 
 
+* chore: update README (1444fcb)
+* chore: run CI on pull requests (ad66cc0)
+* chore: fix playwright test port (9cc53e3)
+* Merge pull request #16 from venashial/main (4b4bb88)
+* chore: upgrade to Vite 3 (5ec866c)
+
 ## [0.3.0](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.0-beta.1...0.3.0) (2022-04-10)## [0.3.0-beta.1](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.0-beta.0...0.3.0-beta.1) (2022-04-08)
 
 
