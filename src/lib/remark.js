@@ -99,7 +99,7 @@ export default function (options = {}) {
 
 function parseMeta(meta) {
   const result = {}
-  const meta_parts = meta.match(/(?:[^\s"]+|"[^"]*")+/g)
+  const meta_parts = meta.match(/(?:[^\s"]+|"[^"]*")+/g) ?? []
   
 
   for (let i = 0; i < meta_parts.length; i++) {
