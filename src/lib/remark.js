@@ -26,8 +26,10 @@ export default function (options = {}) {
     console.warn(`ExampleComponent is deprecated, use defaults.Wrapper instead`)
   }
 
-  return function transformer(tree) {
+  return function transformer(tree, file) {
     let examples = []
+
+    const filename = toPOSIX(file.filename).split(toPOSIX(file.cwd)).pop()
 
     visit(tree, 'code', (node) => {
       const languages = ['svelte', 'html']
@@ -36,6 +38,7 @@ export default function (options = {}) {
        */
       const meta = {
         Wrapper: path.resolve(_dirname, 'Example.svelte'),
+        filename,
         ...defaults,
         ...parseMeta(node.meta || '')
       }
@@ -153,4 +156,8 @@ function createExampleComponent(value, meta, index) {
             }</slot>
 						<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
 			</Example>`
+}
+
+function toPOSIX(path) {
+  return path.replace(/\\/g, '/')
 }
