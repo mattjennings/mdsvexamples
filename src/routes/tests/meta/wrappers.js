@@ -1,3 +1,3 @@
-import MetaWrapper from './Wrapper.svelte'
+import MetaWrapper from './MetaWrapper.svelte'
 
 export { MetaWrapper }
