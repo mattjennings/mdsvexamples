@@ -1,6 +1,6 @@
 {
   "name": "mdsvexamples",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "scripts": {
     "dev": "vite dev",
     "build:site": "vite build",
