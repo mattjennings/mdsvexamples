@@ -1,5 +1,13 @@
 
 
+## [0.4.0](https://github.com/mattjennings/mdsvexamples/compare/0.4.0-beta.1...0.4.0) (2023-08-04)
+
+
+### Features
+
+* add filename to meta ([b613c75](https://github.com/mattjennings/mdsvexamples/commit/b613c7564e2da8eb22951e4575eed4fbfb5021a6))
+* support named exports for wrapper components ([5605e93](https://github.com/mattjennings/mdsvexamples/commit/5605e93f188f4c9880f3d5e64b311dce53f71891))
+
 ## [0.4.0-beta.1](https://github.com/mattjennings/mdsvexamples/compare/0.3.4...0.4.0-beta.1) (2023-08-04)
 
 ### [0.3.4](https://github.com/mattjennings/mdsvexamples/compare/0.3.3...0.3.4) (2023-08-04)
