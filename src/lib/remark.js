@@ -31,9 +31,6 @@ export default function (options = {}) {
 
     const filename = toPOSIX(file.filename).split(toPOSIX(file.cwd)).pop()
 
-    // temp to debug windows bug in CI
-    console.log(file)
-
     visit(tree, 'code', (node) => {
       const languages = ['svelte', 'html']
       /**
