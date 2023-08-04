@@ -132,7 +132,10 @@ Example code blocks are rendered with a [Svelte component](./src/lib/Example.sve
       examples,
       {
         defaults: {
-          Wrapper: '/src/lib/Example.svelte'
+          Wrapper: '/src/lib/Example.svelte',
+
+          // or if the component is a named export
+          Wrapper: ['some-package', 'CustomExample'] // -> import { CustomExample } from 'some-package'
         }
       }
     ]

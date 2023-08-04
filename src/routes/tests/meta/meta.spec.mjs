@@ -31,6 +31,8 @@ test('wrapper and custom meta', async ({ page }) => {
 test('array meta', async ({ page }) => {
   await page.goto('/tests/meta/array')
   await expect(
-    page.locator('text={"Wrapper":"../Wrapper.svelte","example":true,"custom":["hello/world"]}')
+    page.locator(
+      'text={"Wrapper":"../Wrapper.svelte","example":true,"space":["hello","world"],"nospace":["hello","world"]}'
+    )
   ).toBeVisible()
 })
