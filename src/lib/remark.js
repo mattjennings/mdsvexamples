@@ -29,7 +29,11 @@ export default function (options = {}) {
   return function transformer(tree, file) {
     let examples = []
 
-    const filename = file.filename.split(file.cwd).pop()
+    const filename = toPOSIX(file.filename).split(toPOSIX(file.cwd)).pop()
+
+    // temp to debug windows bug in CI
+    console.log(file)
+
     visit(tree, 'code', (node) => {
       const languages = ['svelte', 'html']
       /**
@@ -155,4 +159,8 @@ function createExampleComponent(value, meta, index) {
             }</slot>
 						<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
 			</Example>`
+}
+
+function toPOSIX(path) {
+  return path.replace(/\\/g, '/')
 }
