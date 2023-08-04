@@ -12,33 +12,22 @@
       "types": "./dist/Example.svelte.d.ts",
       "svelte": "./dist/Example.svelte"
     },
-    "./esbuild": {
-      "types": "./dist/esbuild.d.ts",
-      "default": "./dist/esbuild.js"
-    },
-    "./plugin": {
-      "types": "./dist/plugin.d.ts",
-      "default": "./dist/plugin.js"
-    },
-    "./remark": {
-      "types": "./dist/remark.d.ts",
-      "default": "./dist/remark.js"
-    },
-    "./rollup": {
-      "types": "./dist/rollup.d.ts",
-      "default": "./dist/rollup.js"
-    },
-    "./util": {
-      "types": "./dist/util.d.ts",
-      "default": "./dist/util.js"
-    },
-    "./vite": {
-      "types": "./dist/vite.d.ts",
-      "default": "./dist/vite.js"
-    },
+    "./esbuild": "./dist/esbuild.js",
+    "./plugin": "./dist/plugin.js",
+    "./remark": "./dist/remark.js",
+    "./rollup": "./dist/rollup.js",
+    "./util": "./dist/util.js",
+    "./vite": "./dist/vite.js",
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    }
+  },
+  "typesVersions": {
+    ">=4.0": {
+      "*": [
+        "dist/*"
+      ]
     }
   },
   "scripts": {
