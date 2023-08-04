@@ -1,3 +1,7 @@
+
+
+## [0.4.0-beta.1](https://github.com/mattjennings/mdsvexamples/compare/0.3.4...0.4.0-beta.1) (2023-08-04)
+
 ### [0.3.4](https://github.com/mattjennings/mdsvexamples/compare/0.3.3...0.3.4) (2023-08-04)
 
 ### Bug Fixes
