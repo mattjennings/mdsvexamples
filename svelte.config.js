@@ -5,21 +5,21 @@ import adapter from '@sveltejs/adapter-auto'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	extensions: ['.svelte', ...mdsvexConfig.extensions],
+  extensions: ['.svelte', ...mdsvexConfig.extensions],
 
-	kit: {
-		adapter: adapter(),
-		package: {
-			files: (file) => !file.includes('site')
-		},
-	},
+  kit: {
+    adapter: adapter()
+  },
 
-	preprocess: [
-		preprocess({
-			postcss: true
-		}),
-		mdsvex(mdsvexConfig)
-	]
+  package: {
+    files: (file) => !file.includes('site')
+  },
+  preprocess: [
+    preprocess({
+      postcss: true
+    }),
+    mdsvex(mdsvexConfig)
+  ]
 }
 
 export default config

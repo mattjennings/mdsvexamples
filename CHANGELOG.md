@@ -1,5 +1,3 @@
-
-
 ### [0.3.3](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.2...0.3.3) (2022-12-10)
 
 ### [0.3.2](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.1...0.3.2) (2022-09-14)

@@ -5,9 +5,8 @@ import Prism from 'prismjs'
 import 'prism-svelte'
 import { escape } from './util.js'
 
-const _dirname = typeof __dirname !== 'undefined'
-  ? __dirname
-  : path.dirname(fileURLToPath(import.meta.url))
+const _dirname =
+  typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
 
 // regex to find <script> block in svelte
 const RE_SCRIPT_START =
@@ -100,7 +99,6 @@ export default function (options = {}) {
 function parseMeta(meta) {
   const result = {}
   const meta_parts = meta.match(/(?:[^\s"]+|"[^"]*")+/g) ?? []
-  
 
   for (let i = 0; i < meta_parts.length; i++) {
     const [key, value = 'true'] = meta_parts[i].split('=')

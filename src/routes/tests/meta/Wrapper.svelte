@@ -1,5 +1,5 @@
 <script>
-	export let meta
+  export let meta
 </script>
 
 {JSON.stringify(meta)}

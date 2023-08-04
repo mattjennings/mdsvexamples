@@ -1,3 +1,0 @@
-```svelte example Wrapper="./_Wrapper.svelte"
-
-```

@@ -12,7 +12,7 @@ test('hideScript', async ({ page }) => {
       logs.push(await arg.jsonValue())
     }
   })
-  await page.goto('/tests/meta/hide-script')
+  await page.goto('/tests/meta/hide-script', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('text=<script>')).not.toBeVisible()
   expect(logs).toContain('hello from hidden script')
 })
@@ -25,12 +25,12 @@ test('hideStyle', async ({ page }) => {
 
 test('wrapper and custom meta', async ({ page }) => {
   await page.goto('/tests/meta/wrapper')
-  await expect(page.locator(`text={"Wrapper":"./_Wrapper.svelte","example":true}`)).toBeVisible()
+  await expect(page.locator(`text={"Wrapper":"../Wrapper.svelte","example":true}`)).toBeVisible()
 })
 
 test('array meta', async ({ page }) => {
   await page.goto('/tests/meta/array')
   await expect(
-    page.locator('text={"Wrapper":"./_Wrapper.svelte","example":true,"custom":["hello/world"]}')
+    page.locator('text={"Wrapper":"../Wrapper.svelte","example":true,"custom":["hello/world"]}')
   ).toBeVisible()
 })

@@ -1,6 +1,6 @@
 ```svelte example csr
 <script>
-    import CSR from './_CSR.svelte'
+    import CSR from '../CSR.svelte'
 </script>
 
 <CSR />
