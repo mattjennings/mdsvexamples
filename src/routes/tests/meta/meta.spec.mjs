@@ -33,9 +33,11 @@ test('wrapper and custom meta', async ({ page }) => {
 
 test('array meta', async ({ page }) => {
   await page.goto('/tests/meta/array')
+
   const meta = await getMeta(page)
 
-  expect(meta.custom).toEqual(['hello/world'])
+  expect(meta.space).toEqual(['hello', 'world'])
+  expect(meta.nospace).toEqual(['hello', 'world'])
 })
 
 test('filename meta', async ({ page }) => {

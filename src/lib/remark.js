@@ -14,6 +14,9 @@ const RE_SCRIPT_START =
 const RE_SCRIPT_BLOCK = /(<script[\s\S]*?>)([\s\S]*?)(<\/script>)/g
 const RE_STYLE_BLOCK = /(<style[\s\S]*?>)([\s\S]*?)(<\/style>)/g
 
+// parses key=value pairs from a string. supports strings, numbers, booleans, and arrays
+const RE_PARSE_META = /(\w+=\d+|\w+="[^"]*"|\w+=\[[^\]]*\]|\w+)/g
+
 export const EXAMPLE_MODULE_PREFIX = '___mdsvexample___'
 export const EXAMPLE_COMPONENT_PREFIX = 'Mdsvexample___'
 
@@ -66,7 +69,10 @@ export default function (options = {}) {
     // add imports for each generated example
     let scripts = ''
     examples.forEach((example, i) => {
-      const imp = `import Example from "${example.Wrapper}";\n`
+      const imp =
+        typeof example.Wrapper === 'string'
+          ? `import Example from "${example.Wrapper}";\n`
+          : `import { ${example.Wrapper[1]} as Example } from "${example.Wrapper[0]}";\n`
 
       if (!scripts.includes(imp)) {
         scripts += imp
@@ -101,12 +107,18 @@ export default function (options = {}) {
 
 function parseMeta(meta) {
   const result = {}
-  const meta_parts = meta.match(/(?:[^\s"]+|"[^"]*")+/g) ?? []
+  const meta_parts = meta.match(RE_PARSE_META) ?? []
 
   for (let i = 0; i < meta_parts.length; i++) {
     const [key, value = 'true'] = meta_parts[i].split('=')
 
-    result[key] = JSON.parse(value)
+    try {
+      result[key] = JSON.parse(value)
+    } catch (e) {
+      const error = new Error(`Unable to parse meta \`${key}=${value}\` - ${e.message}`)
+      error.stack = e.stack
+      throw error
+    }
   }
 
   return result

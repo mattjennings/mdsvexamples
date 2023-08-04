@@ -1,0 +1,3 @@
+```svelte example Wrapper=["../wrappers.js", "MetaWrapper"]
+
+```
