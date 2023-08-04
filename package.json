@@ -5,13 +5,40 @@
     "dist"
   ],
   "exports": {
+    "./package.json": "./package.json",
+    "./themes/dark.css": "./dist/themes/dark.css",
+    "./themes/light.css": "./dist/themes/light.css",
     "./Example.svelte": {
       "types": "./dist/Example.svelte.d.ts",
       "svelte": "./dist/Example.svelte"
     },
+    "./esbuild": {
+      "types": "./dist/esbuild.d.ts",
+      "default": "./dist/esbuild.js"
+    },
+    "./plugin": {
+      "types": "./dist/plugin.d.ts",
+      "default": "./dist/plugin.js"
+    },
+    "./remark": {
+      "types": "./dist/remark.d.ts",
+      "default": "./dist/remark.js"
+    },
+    "./rollup": {
+      "types": "./dist/rollup.d.ts",
+      "default": "./dist/rollup.js"
+    },
+    "./util": {
+      "types": "./dist/util.d.ts",
+      "default": "./dist/util.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "default": "./dist/vite.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js"
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
@@ -33,6 +60,9 @@
     "unist-util-visit": "^4.1.2",
     "unplugin": "^1.4.0",
     "upath": "^2.0.1"
+  },
+  "peerDependencies": {
+    "svelte": "^3.0.0 || ^4.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",

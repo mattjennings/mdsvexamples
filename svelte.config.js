@@ -10,10 +10,6 @@ const config = {
   kit: {
     adapter: adapter()
   },
-
-  package: {
-    files: (file) => !file.includes('site')
-  },
   preprocess: [
     preprocess({
       postcss: true
