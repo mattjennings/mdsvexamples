@@ -130,9 +130,8 @@ export default createUnplugin(
 
           return {
             code: ast.generate(tree),
-            /** @type {any} */
             map: {
-              mappings: null
+              mappings: ''
             }
           }
         }
@@ -140,7 +139,7 @@ export default createUnplugin(
         return {
           code,
           map: {
-            mappings: null
+            mappings: ''
           }
         }
       },
