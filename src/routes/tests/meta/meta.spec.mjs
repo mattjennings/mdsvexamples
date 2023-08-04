@@ -25,12 +25,26 @@ test('hideStyle', async ({ page }) => {
 
 test('wrapper and custom meta', async ({ page }) => {
   await page.goto('/tests/meta/wrapper')
-  await expect(page.locator(`text={"Wrapper":"../Wrapper.svelte","example":true}`)).toBeVisible()
+  const meta = await getMeta(page)
+
+  expect(meta.Wrapper).toBe('../MetaWrapper.svelte')
+  expect(meta.example).toBe(true)
 })
 
 test('array meta', async ({ page }) => {
   await page.goto('/tests/meta/array')
-  await expect(
-    page.locator('text={"Wrapper":"../Wrapper.svelte","example":true,"custom":["hello/world"]}')
-  ).toBeVisible()
+  const meta = await getMeta(page)
+
+  expect(meta.custom).toEqual(['hello/world'])
 })
+
+test('filename meta', async ({ page }) => {
+  await page.goto('/tests/meta/filename')
+  const meta = await getMeta(page)
+
+  expect(meta.filename).toBe('/src/routes/tests/meta/filename/+page.svx')
+})
+
+async function getMeta(page) {
+  return JSON.parse(await page.locator('#meta').textContent())
+}
