@@ -1,3 +1,0 @@
-```svelte example custom=["hello/world"] Wrapper="./_Wrapper.svelte"
-
-```

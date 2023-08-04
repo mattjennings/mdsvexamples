@@ -1,6 +1,6 @@
 ```svelte example
 <script>
-    import Button from './_Button.svelte'
+    import Button from '../Button.svelte'
 </script>
 
 <Button />

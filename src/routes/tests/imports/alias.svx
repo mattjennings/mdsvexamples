@@ -1,7 +1,0 @@
-```svelte example
-<script>
-    import Button from '$routes/tests/imports/_Button.svelte'
-</script>
-
-<Button />
-```
