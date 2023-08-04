@@ -1,3 +1,9 @@
+### [0.3.4](https://github.com/mattjennings/mdsvexamples/compare/0.3.3...0.3.4) (2023-08-04)
+
+### Bug Fixes
+
+- return empty string instead of null for transform mappings ([a3a04ff](https://github.com/mattjennings/mdsvexamples/commit/a3a04ffebeffa846d8edb5754a40a74e2ffd611e))
+
 ### [0.3.3](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.2...0.3.3) (2022-12-10)
 
 ### [0.3.2](https://github.com/mattjennings/mdsvex-code-preview/compare/0.3.1...0.3.2) (2022-09-14)
