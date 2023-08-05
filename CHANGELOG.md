@@ -1,5 +1,12 @@
 
 
+### [0.4.1](https://github.com/mattjennings/mdsvexamples/compare/0.4.0...0.4.1) (2023-08-05)
+
+
+### Bug Fixes
+
+* hmr css updates in example blocks ([e199e3b](https://github.com/mattjennings/mdsvexamples/commit/e199e3b3135cbb9dd177e7fea5f1b69b1714610f)), closes [#13](https://github.com/mattjennings/mdsvexamples/issues/13)
+
 ## [0.4.0](https://github.com/mattjennings/mdsvexamples/compare/0.4.0-beta.1...0.4.0) (2023-08-04)
 
 
