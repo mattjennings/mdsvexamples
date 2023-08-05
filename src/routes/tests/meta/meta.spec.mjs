@@ -14,6 +14,7 @@ test('hideScript', async ({ page }) => {
   })
   await page.goto('/tests/meta/hide-script', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('text=<script>')).not.toBeVisible()
+  await page.waitForTimeout(1000) // wait for logs
   expect(logs).toContain('hello from hidden script')
 })
 
