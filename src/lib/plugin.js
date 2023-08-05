@@ -169,7 +169,7 @@ export default createUnplugin(
               .forEach((file) => {
                 const mod = server.moduleGraph.getModuleById(file.id)
                 if (mod) {
-                  modules.push(mod)
+                  modules.push(mod, ...mod.clientImportedModules, ...mod.ssrImportedModules)
                 }
               })
           }
