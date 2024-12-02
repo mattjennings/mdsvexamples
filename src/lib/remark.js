@@ -150,24 +150,29 @@ function createExampleComponent(value, meta, index) {
     meta: escape(JSON.stringify(meta))
   }
 
-  return `<Example 
-						__mdsvexample_src={${props.__mdsvexample_src}} 
-						src={${props.src}} 
-						meta={${props.meta}}
-					>
-						<slot slot="example">${
-              meta.csr
-                ? `
-								{#if typeof window !== 'undefined'}
-									{#await import("${EXAMPLE_MODULE_PREFIX}${index}.svelte") then module}
-										{@const ${mdsvexampleComponentName} = module.default}
-										<${mdsvexampleComponentName} />
-									{/await}
-								{/if}`
-                : `<${mdsvexampleComponentName} />`
-            }</slot>
-						<slot slot="code">{@html ${JSON.stringify(highlighted)}}</slot>
-			</Example>`
+  return `
+  <Example 
+    __mdsvexample_src={${props.__mdsvexample_src}} 
+    src={${props.src}} 
+    meta={${props.meta}}
+  >
+    {#snippet example()}
+      ${meta.csr
+        ? `
+        {#if typeof window !== 'undefined'}
+        {#await import("${EXAMPLE_MODULE_PREFIX}${index}.svelte") then module}
+          {@const ${mdsvexampleComponentName} = module.default}
+          <${mdsvexampleComponentName} />
+        {/await}
+        {/if}`
+        : `<${mdsvexampleComponentName} />`
+      }
+    {/snippet}
+
+    {#snippet code()}
+      {@html ${JSON.stringify(highlighted)}}
+    {/snippet}
+  </Example>`
 }
 
 function toPOSIX(path) {
