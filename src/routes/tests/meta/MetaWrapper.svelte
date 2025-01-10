@@ -1,5 +1,5 @@
 <script>
-  export let meta
+  let { meta } = $props();
 </script>
 
 <pre id="meta">
