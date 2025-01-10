@@ -1,5 +1,14 @@
 
 
+## [0.5.0](https://github.com/mattjennings/mdsvexamples/compare/0.4.1...0.5.0) (2025-01-10)
+
+
+### Features
+
+* migrate components to svelte 5 ([299a915](https://github.com/mattjennings/mdsvexamples/commit/299a915a4883737f903d2ca4493528c15dabde7c))
+* update packages ([d7832d7](https://github.com/mattjennings/mdsvexamples/commit/d7832d7e8ac1472574a88c27d0abc2bd1f536e6b))
+* upgrade generated mdsvexample component to svelte 5 ([e3d2f85](https://github.com/mattjennings/mdsvexamples/commit/e3d2f85de3319d3491c3efea575619729a8a81a6))
+
 ### [0.4.1](https://github.com/mattjennings/mdsvexamples/compare/0.4.0...0.4.1) (2023-08-05)
 
 
