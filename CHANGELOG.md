@@ -2,6 +2,10 @@
 
 ## [0.5.0](https://github.com/mattjennings/mdsvexamples/compare/0.4.1...0.5.0) (2025-01-10)
 
+Upgrades to Svelte 5 & is now required. If you are using Svelte 4 or below you will need to stay
+on 0.4.1.
+
+Big thanks to @radiium for the work on this release!
 
 ### Features
 
