@@ -146,7 +146,7 @@ function createExampleComponent(value, meta, index) {
   const props = {
     // gets parsed as virtual file content in vite plugin and then removed
     __mdsvexample_src: `String.raw\`${escape(value)}\``,
-    src: `String.raw\`${escape(code)}\``,
+    src: JSON.stringify(escape(code)),
     meta: escape(JSON.stringify(meta))
   }
 
