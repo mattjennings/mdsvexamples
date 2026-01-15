@@ -1,5 +1,13 @@
 
 
+### [0.5.1](https://github.com/mattjennings/mdsvexamples/compare/0.5.0...0.5.1) (2026-01-15)
+
+
+### Bug Fixes
+
+* fix missing indentation in props.src ([e18210a](https://github.com/mattjennings/mdsvexamples/commit/e18210a815b30a934c2288a4d109d199f997bca9))
+* upgrade prismjs to 1.30.0 ([bc34a9e](https://github.com/mattjennings/mdsvexamples/commit/bc34a9ed5cd175d3b5dfe75208124f9fc25a4495))
+
 ## [0.5.0](https://github.com/mattjennings/mdsvexamples/compare/0.4.1...0.5.0) (2025-01-10)
 
 Upgrades to Svelte 5 & is now required. If you are using Svelte 4 or below you will need to stay
