@@ -38,7 +38,7 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "release": "release-it --npm.tag=latest",
-    "prerelease": "release-it --preRelease=beta --npm.tag=next",
+    "pre-release": "release-it --preRelease=beta --npm.tag=next",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
   },
