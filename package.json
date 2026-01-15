@@ -45,7 +45,7 @@
   "dependencies": {
     "abstract-syntax-tree": "^2.22.0",
     "prism-svelte": "^0.5.0",
-    "prismjs": "^1.29.0",
+    "prismjs": "^1.30.0",
     "unist-util-visit": "^5.0.0",
     "unplugin": "^1.16.0",
     "upath": "^2.0.1"
